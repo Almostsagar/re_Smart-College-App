@@ -1,0 +1,70 @@
+name: finalapp
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  firebase_core: ^1.7.0
+  firebase_database:
+  firebase_auth: ^3.1.3
+  flutter_secure_storage: ^4.2.1
+  flutter_svg: ^0.23.0+1
+  webview_flutter: ^2.1.2
+  google_fonts:
+  http:
+  shared_preferences: ^2.0.8
+  cloud_firestore: ^2.5.4
+  ionicons: ^0.1.2
+  animations: ^2.0.2
+  razorpay_flutter: ^1.2.7
+  bottom_navy_bar: ^6.0.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/top_header.png
+    - assets/images/1.jpg
+    - assets/images/2.jpg
+    - assets/images/3.jpg
+    - assets/images/4.jpg
+    - assets/images/5.png
+    - assets/images/6.jpg
+    - assets/images/icon/1.png
+    - assets/images/icon/logo.png
+    - assets/images/img-1.png
+    - assets/images/img-2.jpg
+    - assets/images/img-3.png
+    - assets/svg/checkbox.svg
+  fonts:
+    - family: Montserrat Regular
+      fonts:
+        - asset: assets/fonts/mo_re.ttf
+    - family: Trajan Pro
+      fonts:
+        - asset: assets/fonts/mo_me.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 400
+    - family: Cardo
+      fonts:
+        - asset: assets/fonts/Cardo-Bold.ttf
+        - asset: assets/fonts/Cardo-Regular.ttf
+        - asset: assets/fonts/Cardo-Italic.ttf
+
+    - family: ProductSans
+      fonts:
+        - asset: assets/fonts/Product-Sans-Bold.ttf
