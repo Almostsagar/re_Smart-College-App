@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'package:finalapp/pages/login.dart';
+
+import 'package:finalapp/constant.dart';
+import 'package:finalapp/pages/intro_screen.dart';
 import 'package:finalapp/pages/onBoard/onboard.dart';
 import 'package:finalapp/pages/user/usermain.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? isviewed;
-void main() async{
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
@@ -18,6 +20,7 @@ void main() async{
   isviewed = prefs.getInt('onBoard');
   runApp(SplashScreen());
 }
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -54,7 +57,7 @@ class _sp1State extends State<sp1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: kBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +90,6 @@ class _sp1State extends State<sp1> {
   }
 }
 
-
 class OnBoarding extends StatefulWidget {
   @override
   _OnBoardingState createState() => _OnBoardingState();
@@ -106,6 +108,7 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 }
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -117,7 +120,6 @@ class Home extends StatelessWidget {
     );
   }
 }
-
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -155,7 +157,7 @@ class MyApp extends StatelessWidget {
               future: checkLoginStatus(),
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (snapshot.data == false) {
-                  return Login();
+                  return IntroScreen();
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container(

@@ -23,6 +23,7 @@ dependencies:
   ionicons: ^0.1.2
   animations: ^2.0.2
   razorpay_flutter: ^1.2.7
+  hexcolor: ^2.0.5
   bottom_navy_bar: ^6.0.0
 dev_dependencies:
   flutter_test:
@@ -39,6 +40,8 @@ flutter:
     - assets/images/5.png
     - assets/images/6.jpg
     - assets/images/icon/1.png
+    - assets/images/back_arrow.svg
+    - assets/images/team_illustration.png
     - assets/images/icon/logo.png
     - assets/images/img-1.png
     - assets/images/img-2.jpg

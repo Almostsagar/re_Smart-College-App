@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Color.fromRGBO(63, 63, 63, 1));
 
     return Scaffold(
-      backgroundColor: Color(0xff392850),
+      backgroundColor: Colors.black12,
       body: Stack(
         children: <Widget>[
           Container(

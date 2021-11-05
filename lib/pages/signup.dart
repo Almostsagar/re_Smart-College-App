@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../constant.dart';
 import 'login.dart';
 
 // ignore: camel_case_types
@@ -127,6 +129,8 @@ class _signUpState extends State<signUp> {
     }
   }
 
+  late bool _passwordVisible;
+  late bool _passwordVisible2;
   @override
   void dispose() {
     emailController.dispose();
@@ -135,164 +139,510 @@ class _signUpState extends State<signUp> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    _passwordVisible = true;
+    _passwordVisible2 = true;
+  }
+
   Widget build(BuildContext context) {
     printFireBase();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User SignUp'),
-      ),
-      body: Center(
-        child: Stack(children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(left: 40.0, top: 40),
-            child: Text(
-              'Sign Up',
-              style: TextStyle(
-                fontFamily: 'Cardo',
-                fontSize: 35,
-                color: Color(0xff0C2551),
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            //
+        elevation: 0,
+        backgroundColor: kBackgroundColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Login()),
+            );
+          },
+          icon: SvgPicture.asset(
+            'assets/images/back_arrow.svg',
+            width: 24,
+            color: Colors.white,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 80.0),
-            child: Form(
-              key: _formkey,
-              child: Padding(
+        ),
+      ),
+      body: Container(
+        color: kBackgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Stack(children: <Widget>[
+              Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 20.0, horizontal: 30.0),
-                child: ListView(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                          autofocus: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Email: ',
-                            labelStyle: TextStyle(fontSize: 20.0),
-                            border: OutlineInputBorder(),
-                            errorStyle: TextStyle(
-                                color: Colors.redAccent, fontSize: 15.0),
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontFamily: 'Cardo',
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 80.0),
+                child: Form(
+                  key: _formkey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 30.0),
+                    child: ListView(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                              cursorColor: Colors.grey,
+                              keyboardType: TextInputType.emailAddress,
+                              textInputAction: TextInputAction.next,
+                              autofocus: false,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.email_outlined,
+                                  color: Colors.grey,
+                                ),
+                                contentPadding: EdgeInsets.all(20),
+                                hintText: 'Please Enter Your Email ID',
+                                hintStyle: TextStyle(
+                                    fontSize: 16.0, color: Colors.grey),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                    width: 1,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                  fontFamily: 'Cardo',
+                                ),
+                              ),
+                              controller: emailController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '❌   Please Enter Email ID';
+                                } else if (!value.contains('@')) {
+                                  return '⁉   Please Enter Valid Email';
+                                }
+                                return null;
+                              }),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            textInputAction: TextInputAction.next,
+                            enableInteractiveSelection: true,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                              fontFamily: 'Cardo',
+                            ),
+                            cursorColor: Colors.grey,
+                            autofocus: false,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: _passwordVisible,
+                            decoration: InputDecoration(
+                              suffixIcon: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    _passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.vpn_key,
+                                color: Colors.grey,
+                              ),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Enter Your Password',
+                              hintStyle: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontFamily: 'Cardo',
+                              ),
+                              border: OutlineInputBorder(),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                            ),
+                            controller: passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '❗   Please Enter Password';
+                              }
+                              return null;
+                            },
                           ),
-                          controller: emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Email';
-                            } else if (!value.contains('@')) {
-                              return 'Please Enter Valid Email';
-                            }
-                            return null;
-                          }),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Password: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15),
                         ),
-                        controller: passwordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Password';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Confirm Password: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            enableInteractiveSelection: true,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                              fontFamily: 'Cardo',
+                            ),
+                            cursorColor: Colors.grey,
+                            autofocus: false,
+                            keyboardType: TextInputType.visiblePassword,
+                            textInputAction: TextInputAction.next,
+                            obscureText: _passwordVisible2,
+                            decoration: InputDecoration(
+                              suffixIcon: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisible2 = !_passwordVisible2;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    _passwordVisible2
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.vpn_key,
+                                color: Colors.grey,
+                              ),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Confirm your password',
+                              hintStyle: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontFamily: 'Cardo',
+                              ),
+                              border: OutlineInputBorder(),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                            ),
+                            controller: confirmPasswordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '❓   Please Re-enter Password';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                        controller: confirmPasswordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Password';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Enter Student Name: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            textCapitalization: TextCapitalization.words,
+                            enableInteractiveSelection: true,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                              fontFamily: 'Cardo',
+                            ),
+                            cursorColor: Colors.grey,
+                            keyboardType: TextInputType.visiblePassword,
+                            textInputAction: TextInputAction.next,
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.person_sharp,
+                                color: Colors.grey,
+                              ),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Please Enter Student Name',
+                              hintStyle:
+                                  TextStyle(fontSize: 16.0, color: Colors.grey),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                            ),
+                            controller: studentNameController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '⁉   Please Enter Student Name';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                        controller: studentNameController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Branch Name';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Enter Branch Name: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            enableInteractiveSelection: true,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                              fontFamily: 'Cardo',
+                            ),
+                            cursorColor: Colors.grey,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            autofocus: false,
+                            textCapitalization: TextCapitalization.characters,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.library_books_sharp,
+                                color: Colors.grey,
+                              ),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Please Enter Your Branch Name',
+                              hintStyle:
+                                  TextStyle(fontSize: 16.0, color: Colors.grey),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                            ),
+                            controller: branchController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '📛   Please Enter Branch Name';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                        controller: branchController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Branch Name';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Roll No: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            enableInteractiveSelection: true,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                              fontFamily: 'Cardo',
+                            ),
+                            cursorColor: Colors.grey,
+                            keyboardType: TextInputType.streetAddress,
+                            textInputAction: TextInputAction.next,
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.format_list_numbered_rounded,
+                                color: Colors.grey,
+                              ),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Please Enter Your Roll no.',
+                              hintStyle:
+                                  TextStyle(fontSize: 16.0, color: Colors.grey),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                                fontFamily: 'Cardo',
+                              ),
+                            ),
+                            controller: rollnoController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '🚫  Please Enter Roll No';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                        controller: rollnoController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Roll No';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
+                        Container(
+                          height: 60,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: ElevatedButton(
                             onPressed: () {
                               addData(branchController.text);
                               addData1(rollnoController.text);
@@ -308,39 +658,56 @@ class _signUpState extends State<signUp> {
                             },
                             child: const Text(
                               'Sign Up',
-                              style: TextStyle(fontSize: 18.0),
+                              style: TextStyle(
+                                  color: Colors.black87, fontSize: 18),
+                            ),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              )),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              overlayColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.grey,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Already have an account? ",
+                                style: kBodyText,
+                              ),
+                              TextButton(
+                                  onPressed: () => {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  Login(),
+                                              transitionDuration:
+                                                  Duration(seconds: 0)),
+                                        )
+                                      },
+                                  child: const Text('Login',
+                                      style: TextStyle(color: Colors.white)))
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Already have an account? "),
-                          TextButton(
-                              onPressed: () => {
-                                Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                      pageBuilder: (context, animation1,
-                                          animation2) =>
-                                          Login(),
-                                      transitionDuration:
-                                      Duration(seconds: 0)),
-                                )
-                              },
-                              child: const Text('Login'))
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ]),
           ),
-        ]),
+        ),
       ),
     );
   }
