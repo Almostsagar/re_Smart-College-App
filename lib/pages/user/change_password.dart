@@ -1,8 +1,11 @@
+import 'package:finalapp/pages/user/home/subcategories/aboutus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../constant.dart';
 import '../login.dart';
 
 class SettingPageUI extends StatefulWidget {
@@ -16,6 +19,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
   bool valNotify1 = true;
   bool valNotify2 = false;
   bool valNotify3 = false;
+  final storage = new FlutterSecureStorage();
 
   onChangeFunction1(bool newValue1) {
     setState(() {
@@ -78,7 +82,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
                 },
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -95,27 +99,35 @@ class _SettingPageUIState extends State<SettingPageUI> {
                   ),
                 ),
               ),
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('About US',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600])),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.grey,
-                    )
-                  ],
+              GestureDetector(
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => aboutus()),
+                  )
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('About US',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600])),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -146,7 +158,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
                   ),
                   Text('Accessibility',
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 22))
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22))
                 ],
               ),
               const Divider(
@@ -177,7 +189,17 @@ class _SettingPageUIState extends State<SettingPageUI> {
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () async => {
+                    await FirebaseAuth.instance.signOut(),
+                    await storage.delete(key: 'uid'),
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, a, b) => Login(),
+                          transitionDuration: Duration(seconds: 1),
+                        ),
+                        (route) => false)
+                  },
                 ),
               )
             ],
@@ -305,77 +327,184 @@ class _changePassState extends State<changePass> {
     } catch (e) {}
   }
 
+  late bool _passwordVisible;
+
+  @override
+  void initState() {
+    _passwordVisible = true;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password'),
+        elevation: 0,
+        backgroundColor: kBackgroundColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: SvgPicture.asset(
+            'assets/images/back_arrow.svg',
+            width: 24,
+            color: Colors.white,
+          ),
+        ),
       ),
-      body: Stack(children: <Widget>[
-        Form(
-          key: _formkey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            child: ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextFormField(
-                    autofocus: false,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                        labelText: 'New Password: ',
-                        hintText: 'Enter new Password',
-                        labelStyle: TextStyle(fontSize: 20.0),
-                        border: OutlineInputBorder(),
-                        errorStyle:
-                        TextStyle(color: Colors.redAccent, fontSize: 15)),
-                    controller: newPasswordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Password';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (_formkey.currentState!.validate()) {
-                        setState(() {
-                          newPassword = newPasswordController.text;
-                        });
-                        changePassword();
-                      }
-                    },
-                    child: const Text(
+      body: Container(
+        color: kBackgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(children: <Widget>[
+            Form(
+              key: _formkey,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                child: ListView(
+                  children: [
+                    Text(
                       'Change Password',
-                      style: TextStyle(fontSize: 18.0),
-                    ))
-              ],
+                      style: TextStyle(
+                        fontFamily: 'Cardo',
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      child: TextFormField(
+                        enableInteractiveSelection: true,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17.0,
+                          fontFamily: 'Cardo',
+                        ),
+                        cursorColor: Colors.grey,
+                        autofocus: false,
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+                        obscureText: _passwordVisible,
+                        decoration: InputDecoration(
+                          suffixIcon: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: IconButton(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1,
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.vpn_key,
+                            color: Colors.grey,
+                          ),
+                          contentPadding: EdgeInsets.all(20),
+                          hintText: 'Enter Your Password',
+                          hintStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey,
+                            fontFamily: 'Cardo',
+                          ),
+                          border: OutlineInputBorder(),
+                          errorStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16.0,
+                            fontFamily: 'Cardo',
+                          ),
+                        ),
+                        controller: newPasswordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter Password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: 60,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              setState(() {
+                                newPassword = newPasswordController.text;
+                              });
+                              changePassword();
+                            }
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            )),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            overlayColor: MaterialStateProperty.resolveWith(
+                              (states) => Colors.grey,
+                            ),
+                          ),
+                          child: const Text(
+                            'Change Password',
+                            style: TextStyle(
+                                fontSize: 18.0, color: Colors.black87),
+                          )),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
+            const SizedBox(
+              height: 10,
+            ),
+          ]),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: ElevatedButton(
-            onPressed: () async => {
-              await FirebaseAuth.instance.signOut(),
-              await storage.delete(key: 'uid'),
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, a, b) => Login(),
-                    transitionDuration: Duration(seconds: 1),
-                  ),
-                      (route) => false)
-            },
-            child: const Text('Logout'),
-            style: ElevatedButton.styleFrom(primary: Colors.red),
-          ),
-        )
-      ]),
+      ),
     );
   }
 }

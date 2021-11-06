@@ -1,4 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:finalapp/constant.dart';
 import 'package:finalapp/pages/user/profile.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _UserMainState extends State<UserMain> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xff392850),
+            backgroundColor: kBackgroundColor,
             elevation: 8,
             toolbarHeight: 60,
             title: const Text(
@@ -60,7 +61,7 @@ class _UserMainState extends State<UserMain> {
           ),
           body: _widgetOptions.elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavyBar(
-            backgroundColor: Color(0xff392850),
+            backgroundColor: kBackgroundColor,
             selectedIndex: _selectedIndex,
             showElevation: true, // use this to remove appBar's elevation
             onItemSelected: _onItemTapped,
@@ -71,13 +72,13 @@ class _UserMainState extends State<UserMain> {
                 textAlign: TextAlign.center,
                 icon: Icon(Icons.home),
                 title: Text('DashBoard'),
-                activeColor: Colors.red,
+                activeColor: Colors.pink,
               ),
               BottomNavyBarItem(
                   textAlign: TextAlign.center,
                   icon: Icon(Icons.person),
                   title: Text('My Profile'),
-                  activeColor: Colors.purpleAccent),
+                  activeColor: Colors.pink),
               BottomNavyBarItem(
                   textAlign: TextAlign.center,
                   icon: Icon(Icons.settings),

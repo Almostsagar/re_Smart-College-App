@@ -47,6 +47,8 @@ flutter:
     - assets/images/img-2.jpg
     - assets/images/img-3.png
     - assets/svg/checkbox.svg
+    - assets/images/amitji.jpeg
+    - assets/images/gauravji.jpeg
   fonts:
     - family: Montserrat Regular
       fonts:

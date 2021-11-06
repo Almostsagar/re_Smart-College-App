@@ -115,8 +115,8 @@ class _forgetPassState extends State<forgetPass> {
                         child: TextFormField(
                           enableInteractiveSelection: true,
                           style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontSize: 17.0,
                             fontFamily: 'Cardo',
                           ),
                           cursorColor: Colors.grey,

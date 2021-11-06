@@ -200,8 +200,8 @@ class _signUpState extends State<signUp> {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: TextFormField(
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontSize: 17.0,
                                 fontFamily: 'Cardo',
                               ),
                               cursorColor: Colors.grey,
@@ -267,8 +267,8 @@ class _signUpState extends State<signUp> {
                             textInputAction: TextInputAction.next,
                             enableInteractiveSelection: true,
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontSize: 17.0,
                               fontFamily: 'Cardo',
                             ),
                             cursorColor: Colors.grey,
@@ -355,8 +355,8 @@ class _signUpState extends State<signUp> {
                           child: TextFormField(
                             enableInteractiveSelection: true,
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontSize: 17.0,
                               fontFamily: 'Cardo',
                             ),
                             cursorColor: Colors.grey,
@@ -445,8 +445,8 @@ class _signUpState extends State<signUp> {
                             textCapitalization: TextCapitalization.words,
                             enableInteractiveSelection: true,
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontSize: 17.0,
                               fontFamily: 'Cardo',
                             ),
                             cursorColor: Colors.grey,
@@ -510,8 +510,8 @@ class _signUpState extends State<signUp> {
                           child: TextFormField(
                             enableInteractiveSelection: true,
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontSize: 17.0,
                               fontFamily: 'Cardo',
                             ),
                             cursorColor: Colors.grey,
@@ -576,8 +576,8 @@ class _signUpState extends State<signUp> {
                           child: TextFormField(
                             enableInteractiveSelection: true,
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontSize: 17.0,
                               fontFamily: 'Cardo',
                             ),
                             cursorColor: Colors.grey,
