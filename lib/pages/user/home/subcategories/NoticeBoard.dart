@@ -1,6 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:webview_flutter/platform_interface.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../constant.dart';
 
 class NoticeBoard extends StatelessWidget {
   const NoticeBoard({Key? key}) : super(key: key);
@@ -11,22 +16,24 @@ class NoticeBoard extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          // toolbarHeight: 10,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: kBackgroundColor,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.green,
+            icon: SvgPicture.asset(
+              'assets/images/back_arrow.svg',
+              width: 24,
+              color: Colors.white,
             ),
           ),
         ),
       ),
-      body: Center(child: Text('Notice Board')),
+      body: const WebView(
+        initialUrl: 'https://www.giet.edu/examinations/notices/ ',
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
     );
   }
 }

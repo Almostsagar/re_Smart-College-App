@@ -8,7 +8,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Widgets/Connection_test/connectivity_provider.dart';
+import 'Widgets/Connection_test/home_page.dart';
 
 int? isviewed;
 void main() async {
@@ -111,12 +115,20 @@ class _OnBoardingState extends State<OnBoarding> {
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyApp(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ConnectivityProvider(),
+          child: HomePage(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        home: HomePage(),
+      ),
     );
   }
 }

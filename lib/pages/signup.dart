@@ -76,6 +76,7 @@ class _signUpState extends State<signUp> {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.redAccent,
@@ -255,8 +256,8 @@ class _signUpState extends State<signUp> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return '❌   Please Enter Email ID';
-                                } else if (!value.contains('@')) {
-                                  return '⁉   Please Enter Valid Email';
+                                } else if (!value.contains('@giet.edu')) {
+                                  return '⁉   Please Enter Valid Email of @giet.edu';
                                 }
                                 return null;
                               }),
@@ -442,7 +443,7 @@ class _signUpState extends State<signUp> {
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: TextFormField(
-                            textCapitalization: TextCapitalization.words,
+                            textCapitalization: TextCapitalization.characters,
                             enableInteractiveSelection: true,
                             style: TextStyle(
                               color: Colors.white,
@@ -575,6 +576,7 @@ class _signUpState extends State<signUp> {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: TextFormField(
                             enableInteractiveSelection: true,
+                            textCapitalization: TextCapitalization.characters,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 17.0,

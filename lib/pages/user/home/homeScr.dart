@@ -6,7 +6,6 @@ import 'package:finalapp/pages/user/home/subcategories/attendence.dart';
 import 'package:finalapp/pages/user/home/subcategories/feespayment.dart';
 import 'package:finalapp/pages/user/home/subcategories/onlineNotes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../profile.dart';
 
@@ -43,56 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => profile()),
-                      )
-                    },
-                    child: Container(
-                      height: 64,
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const CircleAvatar(
-                            radius: 32,
-                            backgroundImage: NetworkImage(
-                                'https://media-exp1.licdn.com/dms/image/C5603AQFiU9cIl1ZfSA/profile-displayphoto-shrink_200_200/0/1634197921575?e=1640217600&v=beta&t=TlIa6YxsR0jCYzfLnioLim4OAiSMISzFui9j-ppOJqA'),
-                          ),
-                          const SizedBox(
-                            width: 16.0,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Sagar Kumar',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold))),
-                              const Text(
-                                '19CSE003',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat Regular',
-                                    color: Colors.white,
-                                    fontSize: 14.0),
-                              ),
-                              const Text(
-                                'CSE',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat Regular',
-                                    color: Colors.white,
-                                    fontSize: 14.0),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                  SizedBox(
+                    height: 50,
                   ),
                   Expanded(
                     child: GridView.count(

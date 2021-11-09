@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +32,9 @@ class _profileState extends State<profile> {
       );
     }
   }
+
+  final databaseRef = FirebaseDatabase.instance.reference().child('studName');
+  final Future<FirebaseApp> _future = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +92,7 @@ class _profileState extends State<profile> {
                 color: Colors.grey[200],
                 child: Center(
                     child: Card(
-                      // elevation: 4,
+                        // elevation: 4,
                         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                         child: Container(
                             width: 370.0,
@@ -120,7 +125,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Email",
@@ -131,7 +136,7 @@ class _profileState extends State<profile> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 '$email',
@@ -143,22 +148,22 @@ class _profileState extends State<profile> {
                                               ),
                                               user!.emailVerified
                                                   ? Text(
-                                                '  (Verified ✔)',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                    fontSize: 12.0,
-                                                    color:
-                                                    Colors.blueGrey),
-                                              )
+                                                      '  (Verified ✔)',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 12.0,
+                                                          color:
+                                                              Colors.blueGrey),
+                                                    )
                                                   : TextButton(
-                                                  onPressed: () =>
-                                                  {verifyEmail()},
-                                                  child: Text(
-                                                    'Verify Now',
-                                                    style: TextStyle(
-                                                        fontSize: 12),
-                                                  ))
+                                                      onPressed: () =>
+                                                          {verifyEmail()},
+                                                      child: Text(
+                                                        'Verify Now',
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ))
                                             ],
                                           )
                                         ],
@@ -181,7 +186,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Branch",
@@ -191,7 +196,7 @@ class _profileState extends State<profile> {
                                             ),
                                           ),
                                           Text(
-                                            "Computer Science and Engineering",
+                                            "CSE",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 13.0,
@@ -218,7 +223,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "User ID",
@@ -255,7 +260,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Last Sign In Time",
@@ -292,7 +297,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Account Created On",

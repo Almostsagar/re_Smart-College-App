@@ -1,32 +1,35 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'library/home_page.dart';
+
 class Library extends StatelessWidget {
-  const Library({Key? key}) : super(key: key);
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-          // toolbarHeight: 10,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.green,
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        // CHeck for Errors
+        if (snapshot.hasError) {
+          print("Something went Wrong");
+        }
+        // once Completed, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            title: 'Flutter Firestorm CRUD',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
             ),
-          ),
-        ),
-      ),
-      body: Center(child: Text(':Library')),
+            debugShowCheckedModeBanner: false,
+            home: HomePage(),
+          );
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }

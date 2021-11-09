@@ -170,8 +170,8 @@ class _forgetPassState extends State<forgetPass> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return '❌   Please Enter Email';
-                            } else if (!value.contains('@')) {
-                              return '⁉    Please Enter Valid Email';
+                            } else if (!value.contains('@giet.edu')) {
+                              return '⁉    Please Enter Valid Email of @giet.edu';
                             }
                             return null;
                           },

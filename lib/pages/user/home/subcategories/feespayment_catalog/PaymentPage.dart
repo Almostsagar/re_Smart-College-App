@@ -35,7 +35,7 @@ class _PaymentPageState extends State<PaymentPage> {
     int amountToPay = int.parse(amount.text) * 100;
 
     var options = {
-      'key': 'rzp_test_YehoKs8pmiMuVH',
+      'key': 'rzp_test_2RdB974MefmXB6',
       'amount': "$amountToPay",
       'name': name.text,
       'description': description.text,

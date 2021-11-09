@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.finalapp">
    <application
-        android:label="Smart Clg App"
+        android:label="College App"
+       android:usesCleartextTraffic = "true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

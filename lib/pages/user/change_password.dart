@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constant.dart';
 import '../login.dart';
+import 'home/subcategories/privacysec.dart';
 
 class SettingPageUI extends StatefulWidget {
   const SettingPageUI({Key? key}) : super(key: key);
@@ -21,6 +22,10 @@ class _SettingPageUIState extends State<SettingPageUI> {
   bool valNotify3 = false;
   final storage = new FlutterSecureStorage();
 
+  ThemeData _lighttheme =
+      ThemeData(brightness: Brightness.light, primaryColor: Colors.blue);
+  ThemeData _darkTheme =
+      ThemeData(brightness: Brightness.dark, primaryColor: Colors.amber);
   onChangeFunction1(bool newValue1) {
     setState(() {
       valNotify1 = newValue1;
@@ -39,10 +44,45 @@ class _SettingPageUIState extends State<SettingPageUI> {
     });
   }
 
+  showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are You Sure you want to Sign out?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text("YES"),
+              onPressed: () async => {
+                await FirebaseAuth.instance.signOut(),
+                await storage.delete(key: 'uid'),
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, a, b) => Login(),
+                      transitionDuration: Duration(seconds: 1),
+                    ),
+                    (route) => false)
+              },
+            ),
+            TextButton(
+              child: Text("CANCEL"),
+              onPressed: () {
+                //Put your code here which you want to execute on Cancel button click.
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: valNotify1 ? _darkTheme : _lighttheme,
       home: Scaffold(
         body: Container(
           padding: const EdgeInsets.all(10),
@@ -55,7 +95,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
                 children: const [
                   Icon(
                     Icons.person,
-                    color: Color(0xff392850),
+                    color: Colors.grey,
                   ),
                   SizedBox(
                     width: 10,
@@ -125,22 +165,56 @@ class _SettingPageUIState extends State<SettingPageUI> {
                   ),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Privacy and Security',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600])),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.grey,
-                    )
-                  ],
+              GestureDetector(
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => privacy()),
+                  )
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Privacy Policy',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600])),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => security()),
+                  )
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Terms and conditions',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600])),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
                 ),
               ),
               buildAccountOption(context, 'Languages'),
@@ -151,7 +225,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
                 children: const [
                   Icon(
                     Icons.accessibility,
-                    color: Color(0xff392850),
+                    color: Colors.grey,
                   ),
                   SizedBox(
                     width: 10,
@@ -189,17 +263,20 @@ class _SettingPageUIState extends State<SettingPageUI> {
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.white),
                   ),
-                  onPressed: () async => {
-                    await FirebaseAuth.instance.signOut(),
-                    await storage.delete(key: 'uid'),
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, a, b) => Login(),
-                          transitionDuration: Duration(seconds: 1),
-                        ),
-                        (route) => false)
+                  onPressed: () {
+                    showAlert(context);
                   },
+                  // onPressed: () async => {
+                  //   await FirebaseAuth.instance.signOut(),
+                  //   await storage.delete(key: 'uid'),
+                  //   Navigator.pushAndRemoveUntil(
+                  //       context,
+                  //       PageRouteBuilder(
+                  //         pageBuilder: (context, a, b) => Login(),
+                  //         transitionDuration: Duration(seconds: 1),
+                  //       ),
+                  //       (route) => false)
+                  // },
                 ),
               )
             ],

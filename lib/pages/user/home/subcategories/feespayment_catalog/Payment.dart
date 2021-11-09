@@ -135,7 +135,7 @@ class _PaymentState extends State<Payment> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        '💲500',
+                        '₹50200',
                         style: TextStyle(fontSize: 18),
                       )
                     ],
@@ -262,7 +262,7 @@ class _PaymentState extends State<Payment> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        '💲152',
+                        '₹1525',
                         style: TextStyle(fontSize: 18),
                       )
                     ],
@@ -363,7 +363,7 @@ class _PaymentState extends State<Payment> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        '💲500',
+                        '₹50000',
                         style: TextStyle(fontSize: 18),
                       )
                     ],

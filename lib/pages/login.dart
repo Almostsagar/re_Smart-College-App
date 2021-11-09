@@ -86,10 +86,17 @@ class _LoginState extends State<Login> {
         backgroundColor: kBackgroundColor,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => IntroScreen()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => IntroScreen()),
+            // );
+            Navigator.pushAndRemoveUntil(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, a, b) => IntroScreen(),
+                  transitionDuration: Duration(seconds: 1),
+                ),
+                (route) => false);
           },
           icon: SvgPicture.asset(
             'assets/images/back_arrow.svg',
@@ -193,8 +200,8 @@ class _LoginState extends State<Login> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return '❌   Please Enter Email ID';
-                        } else if (!value.contains('@')) {
-                          return '⁉    Please Enter Valid Email ID';
+                        } else if (!value.contains('@giet.edu')) {
+                          return '⁉    Please Enter Valid Email ID of @giet.edu';
                         }
                         return null;
                       },

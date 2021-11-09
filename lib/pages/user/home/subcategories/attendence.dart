@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../constant.dart';
 
 class AttendencePage extends StatefulWidget {
   const AttendencePage({Key? key}) : super(key: key);
@@ -15,17 +18,16 @@ class _AttendencePageState extends State<AttendencePage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          // toolbarHeight: 10,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: kBackgroundColor,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.green,
+            icon: SvgPicture.asset(
+              'assets/images/back_arrow.svg',
+              width: 24,
+              color: Colors.white,
             ),
           ),
         ),
