@@ -1,4 +1,4 @@
-**Privacy Policy**
+# Privacy Policy
 
 GIETU built the Smart Course app app as an Open Source app. This SERVICE is provided by GIETU at no cost and is intended for use as is.
 
